@@ -1,0 +1,66 @@
+// JSONBin API Setup
+const binId = "67ae3f5ce41b4d34e48caea7";
+const apiKey = "$2a$10$wrO6nVh76pu42GLeSBtn1OlxlHKOYYSSjIJE0KlRa/c1XerQOQjMa";
+const binUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+
+// Get player name
+let beerName = prompt("Enter beer name:");
+if (!beerName) beerName = "Other";
+let manufacturerName = prompt("Enter beer producer:");
+if (!manufacturerName) manufacturerName = "Other";
+let rankingName = prompt("Enter beer ranking out of 10:");
+if (!rankingName) rankingName = "Other";
+
+// Fetch leaderboard from JSONBin
+async function fetchLeaderboard() {
+    const response = await fetch(binUrl, {
+        headers: {
+            "X-Master-Key": apiKey,
+            "X-Master-Key": apiKey
+        }
+    });
+    const data = await response.json();
+    leaderboard = Array.isArray(data.record.leaderboard) ? data.record.leaderboard : [];
+}
+
+// Update leaderboard on JSONBin
+async function updateLeaderboard(name, score) {
+    const playerIndex = leaderboard.findIndex(player => player.name === name);
+    if (playerIndex !== -1) {
+        if (score > leaderboard[playerIndex].score) {
+            leaderboard[playerIndex].score = score;
+        }
+    } else {
+        leaderboard.push({ name, score });
+    }
+
+    leaderboard.sort((a, b) => b.score - a.score);
+    leaderboard = leaderboard.slice(0, 10);
+
+    await fetch(binUrl, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key": apiKey,
+            "X-Bin-Private": "false"
+        },
+        headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key": apiKey
+        },
+        body: JSON.stringify({ leaderboard })
+    });
+}
+
+// Draw leaderboard
+function drawLeaderboard() {
+    const sortedScores = leaderboard.slice(0, 1000);
+    ctx.fillStyle = "darkblue";
+    ctx.font = "18px Arial";
+    ctx.fillText(`🏆 Leaderboard 🏆`, canvas.width - 200, 30);
+    let yOffset = 60;
+    sortedScores.forEach((entry, index) => {
+        ctx.fillText(`${index + 1}. ${entry.name}: ${entry.score}`, canvas.width - 200, yOffset);
+        yOffset += 30;
+    });
+}
