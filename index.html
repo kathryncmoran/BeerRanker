@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title> Matthias' Personal BeerRanker</title>
+  <title>Matthias' Personal BeerRanker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body { font-family: Arial, sans-serif; margin: 2rem; background: #fafafa; color: #333; }
@@ -27,23 +27,21 @@
     .delete-btn:hover {
       background: #a0740a;
     }
+    .error-message {
+      color: #d9534f;
+      margin-bottom: 1em;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🍺 Matthias' Personal BeerRanker</h1>
-    <form id="beerForm">
+    <form id="beerForm" autocomplete="off">
+      <div class="error-message" id="errorMessage"></div>
       <label for="beerName">Beer name:</label>
       <input type="text" id="beerName" required>
-      <label for="beerRanking">Ranking:</label>
-      <select id="beerRanking" required>
-        <option value="" disabled selected>Select</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
+      <label for="beerRanking">Ranking (1–10):</label>
+      <input type="number" id="beerRanking" min="1" max="10" step="any" required>
       <button type="submit">Add</button>
     </form>
     <div class="beer-list">
@@ -57,6 +55,7 @@
   <script>
     const beerForm = document.getElementById('beerForm');
     const beerList = document.getElementById('beerList');
+    const errorMessage = document.getElementById('errorMessage');
     const STORAGE_KEY = 'beerRankerBeers';
 
     // Load beers from localStorage or start with empty array
@@ -68,21 +67,37 @@
 
     beerForm.addEventListener('submit', function(event) {
       event.preventDefault();
+      errorMessage.textContent = '';
       const name = document.getElementById('beerName').value.trim();
-      const ranking = document.getElementById('beerRanking').value;
-      if (name && ranking) {
-        beers.push({ name, ranking });
-        saveBeers();
-        renderBeers();
-        beerForm.reset();
+      const rankingInput = document.getElementById('beerRanking');
+      const rankingValue = rankingInput.value.trim();
+
+      // Validate: must be a number, between 1 and 10, inclusive
+      const ranking = parseFloat(rankingValue);
+      if (!name) {
+        errorMessage.textContent = "Please enter a beer name.";
+        return;
       }
+      if (
+        isNaN(ranking) ||
+        ranking < 1 ||
+        ranking > 10
+      ) {
+        errorMessage.textContent = "Please enter a valid ranking between 1 and 10 (decimals allowed).";
+        rankingInput.focus();
+        return;
+      }
+      beers.push({ name, ranking });
+      saveBeers();
+      renderBeers();
+      beerForm.reset();
     });
 
     function renderBeers() {
       beerList.innerHTML = '';
       beers.forEach((beer, idx) => {
         const li = document.createElement('li');
-        li.textContent = `${beer.name} - Ranking: ${beer.ranking}/5`;
+        li.textContent = `${beer.name} - Ranking: ${beer.ranking}/10`;
         // Add delete button
         const delBtn = document.createElement('button');
         delBtn.textContent = 'Delete';
