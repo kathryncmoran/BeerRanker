@@ -1,31 +1,52 @@
-<!-- Trigger redeploy 1-->
+<html>
 
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Sammie's Catch Game</title>
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        // Prevent double-tap zoom on iOS
-        document.addEventListener('dblclick', function (e) {
-            e.preventDefault();
-        }, { passive: false });
-    </script>
-</head>
-    
-    
-<body>
-    <canvas id="gameCanvas"></canvas>
-    
-    <!-- Mobile Controls -->
-    <div class="controls">
-        <button id="leftBtn">⬅ Left</button>
-        <button id="rightBtn">Right ➡</button>
-    </div>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111427194-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    <script src="script.js"></script>
+  gtag('config', 'UA-111427194-1');
+	
+	
+	
+</script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet">
+<style>
+	
+<!--	h1 {
+ font-family: 'Cormorant Garamond', serif;
+ font-size: 50px;
+ line-height: 65px;
+}
+ 
+p {
+font-family: 'Source Sans Pro', sans-serif;
+ font-size: 16px;
+ line-height: 25px;
+} -->
+	
+	
+	</style>
+
+	
+</head>
+
+
+
+<body>
+		
+
+	<h1> Matthias' Personal Beer Leaderboard </h1>
+	
+	
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </body>
 </html>
