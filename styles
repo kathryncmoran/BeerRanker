@@ -1,0 +1,38 @@
+body {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* Edge */
+    user-select: none; /* Modern browsers */
+}
+canvas {
+    background-color: #fff;
+    display: block;
+    margin: auto;
+    border: 2px solid black;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mobile Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.controls button {
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    touch-action: manipulation;
+    -webkit-touch-callout: none; /* Disable iOS callout menu */
+}
+.controls button:active {
+    background: #0056b3;
+}
