@@ -2,32 +2,103 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>BeerRanker</title>
+  <title> Matthias' Personal BeerRanker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body { font-family: Arial, sans-serif; margin: 2rem; background: #fafafa; color: #333; }
     .container { max-width: 700px; margin: auto; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px #ddd; }
     h1 { color: #b8860b; }
-    a { color: #2a72d4; }
-    footer { margin-top: 2em; text-align: center; color: #aaa; font-size: 0.9em; }
+    label, input, select, button { font-size: 1rem; }
+    form { margin-bottom: 2em; }
+    input, select { margin: 0 0.5em 0 0; }
+    ul { list-style-type: none; padding: 0; }
+    li { margin: 0.5em 0; }
+    .beer-list { margin-top: 1.5em; }
+    .delete-btn {
+      margin-left: 1em;
+      color: #fff;
+      background: #b8860b;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.2em 0.7em;
+      font-size: 0.9em;
+    }
+    .delete-btn:hover {
+      background: #a0740a;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🍺 Matthias' Personal BeerRanker</h1>
-    <p>
-      Welcome to <strong>BeerRanker</strong>! This project helps you rank and review your favorite beers.
-    </p>
-    <h2>About</h2>
-    <p>
-      BeerRanker is an open-source project designed to make it easy to keep track of beers you’ve tried and add your own ratings! Happy Anniversary, Matthias!
-    </p>
-
-let beerName = prompt("Enter beer name:");
-let manufacturerName = prompt("Enter beer producer:");
-let rankingName = prompt("Enter beer ranking out of 10:");    
-
-    
+    <form id="beerForm">
+      <label for="beerName">Beer name:</label>
+      <input type="text" id="beerName" required>
+      <label for="beerRanking">Ranking:</label>
+      <select id="beerRanking" required>
+        <option value="" disabled selected>Select</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      <button type="submit">Add</button>
+    </form>
+    <div class="beer-list">
+      <h2>All Beers & Rankings</h2>
+      <ul id="beerList"></ul>
+    </div>
+    <footer>
+      &copy; 2025 BeerRanker
+    </footer>
   </div>
+  <script>
+    const beerForm = document.getElementById('beerForm');
+    const beerList = document.getElementById('beerList');
+    const STORAGE_KEY = 'beerRankerBeers';
+
+    // Load beers from localStorage or start with empty array
+    let beers = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+    function saveBeers() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(beers));
+    }
+
+    beerForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const name = document.getElementById('beerName').value.trim();
+      const ranking = document.getElementById('beerRanking').value;
+      if (name && ranking) {
+        beers.push({ name, ranking });
+        saveBeers();
+        renderBeers();
+        beerForm.reset();
+      }
+    });
+
+    function renderBeers() {
+      beerList.innerHTML = '';
+      beers.forEach((beer, idx) => {
+        const li = document.createElement('li');
+        li.textContent = `${beer.name} - Ranking: ${beer.ranking}/5`;
+        // Add delete button
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Delete';
+        delBtn.className = 'delete-btn';
+        delBtn.onclick = function() {
+          beers.splice(idx, 1);
+          saveBeers();
+          renderBeers();
+        };
+        li.appendChild(delBtn);
+        beerList.appendChild(li);
+      });
+    }
+
+    // Render on load
+    renderBeers();
+  </script>
 </body>
 </html>
