@@ -1,0 +1,31 @@
+<!-- Trigger redeploy 1-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Sammie's Catch Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Prevent double-tap zoom on iOS
+        document.addEventListener('dblclick', function (e) {
+            e.preventDefault();
+        }, { passive: false });
+    </script>
+</head>
+    
+    
+<body>
+    <canvas id="gameCanvas"></canvas>
+    
+    <!-- Mobile Controls -->
+    <div class="controls">
+        <button id="leftBtn">⬅ Left</button>
+        <button id="rightBtn">Right ➡</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
